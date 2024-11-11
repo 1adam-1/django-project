@@ -1,0 +1,113 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/logincss.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign UP</title>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="csslogin.css">
+</head>
+<style>
+    body {
+        background-image: url('{% static "img/fr.webp" %}');
+    }
+</style>
+
+<body>
+
+<div class="wrapper">
+    <div class="login_box">
+        <div class="login-header">
+            <span>Sign UP</span>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {% if messages %}
+    <div style="color: red;">
+       
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <strong> {{ message }}</strong> 
+                {% endif %}
+            {% endfor %}
+        
+    </div>
+    
+    <div style="color: green;">
+        
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                  <strong> {{ message }}</strong> 
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+            <div class="input_box">
+                <input type="text" id="user" class="input-field" name="firstname" required>
+                <label for="user" class="label">Firstname</label>
+                <i class="bx bx-user icon"></i>
+            </div>
+
+            <div class="input_box">
+                <input type="text" id="pass" class="input-field" name="lastname" required>
+                <label for="pass" class="label">Lastname</label> <!-- Corrected the input name -->
+                <i class="bx bx-user icon"></i>
+            </div>
+
+            <div class="input_box">
+                <input type="text" id="pass" class="input-field" name="username" required>
+                <label for="pass" class="label">Username</label>
+                <i class="bx bx-user icon"></i>
+            </div> 
+
+            <div class="input_box">
+                <input type="text" id="pass" class="input-field" name="email" required>
+                <label for="pass" class="label">Email</label>
+                <i class="bx bx-user icon"></i>
+            </div>
+
+            <div class="input_box">
+                <input type="password" id="pass1" class="input-field" name="password" required>
+                <label for="pass" class="label">Password</label>
+                <i class="bx bx-lock-alt icon"></i>
+            </div>
+
+            
+            <label for="showPassword">Show Password</label>
+            <input type="checkbox" id="showPassword" onchange="showPass()">
+            
+
+            <div class="input_box">
+                <input type="submit" class="input-submit" value="Register" name="Login"> <!-- Added name attribute -->
+            </div>
+
+            <div class="register">
+                <span>Already have an account? <a href="{% url 'loginpage' %}">Sign In</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+<script>
+    function showPass() {
+        var passwordInput = document.getElementById('pass1');
+
+        if (passwordInput.type==='password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    }
+</script>
+
+
+
+</html>

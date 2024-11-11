@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+    <title>Chatbot Page</title>
+    <style>
+        *{
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.zmo.ai/wp-content/uploads/2023/09/gradient-black-background-with-wavy-lines_23-2149157312.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            max-width: 400px;
+            margin: 50px auto;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1); /* Set background color to transparent white for glass effect */
+            backdrop-filter: blur(10px); /* Add blur effect for glass effect */
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: rgba(0, 0, 0, 0.5); /* Set header background color to semi-transparent black */
+            color: #fff;
+          
+            text-align: center;
+            border-radius: 10px 10px 0 0; /* Rounded corners only at the top */
+        }
+
+        .chat-body {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .message.bot {
+            text-align: left;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message p {
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.1); /* Set message background color to semi-transparent white for glass effect */
+            color: #fff;
+            max-width: 70%;
+        }
+
+        .message.bot p {
+            background-color: rgba(0, 0, 0, 0.2); /* Set bot message background color to semi-transparent black */
+            color: #fff;
+        }
+
+        .message.user p {
+            background-color: rgba(0, 0, 0, 0.5); /* Set user message background color to semi-transparent black */
+            color: #fff;
+        }
+
+        .input-container {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5); /* Set input container background color to semi-transparent black */
+            border-radius: 0 0 10px 10px; /* Rounded corners only at the bottom */
+        }
+
+        .input-container input[type=text] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.1); /* Set input background color to semi-transparent white for glass effect */
+            color: #fff;
+        }
+
+        .input-container button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Set button background color to semi-transparent black */
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background-color: rgba(0, 0, 0, 0.9); /* Darken button color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Chatbot </h1>
+        </div>
+        <div class="chat-body">
+            <div class="message bot">
+                <p>Welcome! How can I assist you today?</p>
+            </div>
+            
+            {% if chat %}
+    {% for message in chat %}
+        {% if message.sender == "user" %}
+            <div class="message user">
+                <p>{{ message.text }}</p>
+            </div>
+        {% elif message.sender == "bot" %}
+            <div class="message bot">
+                <p>{{ message.text }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+        </div>
+        <div class="input-container">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="user_message" placeholder="Type your message here">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

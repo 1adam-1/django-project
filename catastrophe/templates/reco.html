@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catastrophe Recommendation</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/reco.css' %}"> <!-- Assurez-vous que le chemin vers votre feuille de style CSS est correct -->
+
+</head>
+<style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
+    
+    :root {
+        --primary: #094b65;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+        overflow-x: hidden;
+        background: #fff;
+        min-height: 100vh;
+    }
+    
+    #header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+    }
+    
+    #header .logo {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 2em;
+        text-decoration: none;
+    }
+    
+    #header ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #header ul li {
+        list-style: none;
+        margin-left: 20px;
+    }
+    
+.catastrophe-image {
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.selected-cata-container {
+    text-align: center; 
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+
+.selected-cata-container h3 {
+    font-size: 24px; 
+    color: #f90202; 
+    margin-bottom: 15px; 
+}
+
+
+    
+    #header ul li a {
+        text-decoration: none;
+        padding: 6px 15px;
+        color: aliceblue;
+        border-radius: 20px;
+    }
+    
+    
+    #header ul li a:hover,
+    #header ul li a.active {
+        color: var(--primary);
+        background: #fff;
+    }
+    select {
+  /* Reset */
+  appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 20rem;
+  padding: 1rem 4rem 1rem 1rem;
+  background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
+    linear-gradient(to left, var(--arrow-bg) 3em, var(--select-bg) 3em);
+  color: black;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  /* Remove IE arrow */
+  &::-ms-expand {
+    display: none;
+  }
+  /* Remove focus outline */
+  &:focus {
+    outline: none;
+  }
+  /* <option> colors */
+  option {
+    color: inherit;
+    background-color: var(--option-bg);
+  }
+}
+
+    
+    </style>
+<header id="header">
+    <a href="#" class="logo"></a>
+    <ul>
+        <li><a href="{% url 'homepage' %}" ><i class="fas fa-home"></i>Home</a></li>
+        <li><a href="{% url 'recopage' %}" class="active"><i class=""></i>Recommendation</a></li>
+        <li><a href="{% url 'profilpage' %}"><i class="fas fa-user"></i>Profile</a></li>
+        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log out</a></li>
+    </ul>
+</header>
+<body>
+    <div class="sec">
+        <h2>Select Catastrophe:</h2>
+        <form method="GET">
+            <select name="selected_catastrophe"> <!-- Corrected name attribute -->
+                {% for c in cata %}
+                <option value="{{ c.id }}">{{ c.nom }}</option> <!-- Added value attribute with the catastrophe ID -->
+                {% endfor %}
+            </select>
+            <input type="submit" value="Select">
+        </form>
+        {% if selected_catastrophe %}
+<div class="selected-cata-container">
+    <h3>{{ selected_catastrophe.nom }}</h3>
+    <img src="{% static selected_catastrophe.image.url %}" alt="Catastrophe Image" class="catastrophe-image">
+    <p>{{ selected_catastrophe.text }}</p>
+</div>
+{% endif %}
+
+    </div>
+    <div class="chatbot-button">
+        <a href="{% url 'chatbot_page' %}" class="chatbot-link"><i class="fas fa-comments"></i> Talk with Chatbot</a>
+    </div>
+  
+   
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
